@@ -1,0 +1,24 @@
+run = "npm run dev"
+entrypoint = "src/main.tsx"
+
+[nix]
+channel = "stable-23.11"
+
+[env]
+PATH = "/home/runner/.local/share/pnpm:$PATH"
+
+[packager]
+language = "nodejs"
+
+[packager.features]
+packageSearch = true
+guessImports = true
+
+[languages]
+[languages.javascript]
+pattern = "**/*.{js,jsx,ts,tsx}"
+syntax = "javascript"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
+

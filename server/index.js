@@ -8,10 +8,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 
-dotenv.config();
-
+// Load environment variables from the project root
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const projectRoot = path.join(__dirname, '..');
+dotenv.config({ path: path.join(projectRoot, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
