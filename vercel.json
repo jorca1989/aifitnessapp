@@ -5,6 +5,13 @@
       "src": "server/index.js",
       "use": "@vercel/node",
       "config": { "includeFiles": ["server/**"] }
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
@@ -17,12 +24,9 @@
       "dest": "/index.html"
     }
   ],
-  "env": {
-    "FATSECRET_API_KEY": "@fatsecret_api_key",
-    "FATSECRET_API_SECRET": "@fatsecret_api_secret",
-    "USDA_API_KEY": "@usda_api_key",
-    "GOOGLE_VISION_API_KEY": "@google_vision_api_key",
-    "ADMIN_USERNAME": "@admin_username",
-    "ADMIN_PASSWORD": "@admin_password"
+  "functions": {
+    "server/index.js": {
+      "maxDuration": 30
+    }
   }
 }
