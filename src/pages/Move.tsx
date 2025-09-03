@@ -109,7 +109,7 @@ const Move: React.FC = () => {
       if (query) params.append('q', query);
       if (category && category !== 'All') params.append('category', category);
       
-      const response = await axios.get(`${API_ENDPOINTS.exercises/search?${params}.replace(/\//g, "_").toUpperCase()}`);
+      const response = await axios.get(`${API_ENDPOINTS.EXERCISES_SEARCH}?${params}`);
       setSearchResults(response.data);
     } catch (error) {
       console.error('Exercise search error:', error);
