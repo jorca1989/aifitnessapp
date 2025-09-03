@@ -16,6 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../context/UserContext';
+import API_ENDPOINTS from '../config/api';
 
 interface Recipe {
   id: number;
@@ -60,7 +61,7 @@ const Recipes: React.FC = () => {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:3001/api/recipes', {
+        const response = await axios.get('API_ENDPOINTS.RECIPES', {
           params: {
             category: selectedCategory,
             search: searchQuery

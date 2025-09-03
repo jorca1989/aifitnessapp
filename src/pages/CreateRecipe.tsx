@@ -102,7 +102,7 @@ const CreateRecipe: React.FC = () => {
   const handleSaveRecipe = async () => {
     setSaveLoading(true);
     try {
-      const response = await axios.post('http://localhost:3001/api/recipes', {
+              const response = await axios.post(API_ENDPOINTS.RECIPES, {
         name: recipeForm.name,
         servings: recipeForm.servings,
         ingredients: matchedIngredients.map(ing => ({

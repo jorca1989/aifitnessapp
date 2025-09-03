@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_ENDPOINTS from '../config/api';
 
 interface Workout {
   id: number;
@@ -63,7 +64,7 @@ const Workouts: React.FC = () => {
     const fetchWorkouts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:3001/api/workouts', {
+        const response = await axios.get('API_ENDPOINTS.WORKOUTS', {
           params: {
             category: selectedCategory,
             search: searchQuery

@@ -17,7 +17,7 @@ const MyRecipes: React.FC = () => {
     const fetchRecipes = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://localhost:3001/api/recipes');
+        const res = await axios.get('API_ENDPOINTS.RECIPES');
         // Only user-created recipes have a 'name' property (not 'title')
         setRecipes(res.data.filter((r: any) => r.name && !r.title));
       } catch (e) {
