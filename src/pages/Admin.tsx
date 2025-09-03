@@ -16,6 +16,7 @@ import {
   Shield
 } from 'lucide-react';
 import axios from 'axios';
+import API_ENDPOINTS from '../config/api';
 
 interface Recipe {
   id: number;
@@ -220,7 +221,7 @@ const Admin: React.FC = () => {
       };
 
       if (editingRecipe) {
-        await axios.put(`http://localhost:3001/api/admin/recipes/${editingRecipe.id}`, recipeData, { headers: adminHeaders });
+        await axios.put(`${API_ENDPOINTS.admin/recipes/${editingRecipe.id}.replace(/\//g, "_").toUpperCase()}`, recipeData, { headers: adminHeaders });
       } else {
         await axios.post('http://localhost:3001/api/admin/recipes', recipeData, { headers: adminHeaders });
       }
@@ -238,7 +239,7 @@ const Admin: React.FC = () => {
   const handleDeleteRecipe = async (id: number) => {
     if (confirm('Are you sure you want to delete this recipe?')) {
       try {
-        await axios.delete(`http://localhost:3001/api/admin/recipes/${id}`, { headers: adminHeaders });
+        await axios.delete(`${API_ENDPOINTS.admin/recipes/${id}.replace(/\//g, "_").toUpperCase()}`, { headers: adminHeaders });
         fetchData();
       } catch (error) {
         console.error('Error deleting recipe:', error);
@@ -279,7 +280,7 @@ const Admin: React.FC = () => {
       };
 
       if (editingWorkout) {
-        await axios.put(`http://localhost:3001/api/admin/workouts/${editingWorkout.id}`, workoutData, { headers: adminHeaders });
+        await axios.put(`${API_ENDPOINTS.admin/workouts/${editingWorkout.id}.replace(/\//g, "_").toUpperCase()}`, workoutData, { headers: adminHeaders });
       } else {
         await axios.post('http://localhost:3001/api/admin/workouts', workoutData, { headers: adminHeaders });
       }
@@ -297,7 +298,7 @@ const Admin: React.FC = () => {
   const handleDeleteWorkout = async (id: number) => {
     if (confirm('Are you sure you want to delete this workout?')) {
       try {
-        await axios.delete(`http://localhost:3001/api/admin/workouts/${id}`, { headers: adminHeaders });
+        await axios.delete(`${API_ENDPOINTS.admin/workouts/${id}.replace(/\//g, "_").toUpperCase()}`, { headers: adminHeaders });
         fetchData();
       } catch (error) {
         console.error('Error deleting workout:', error);

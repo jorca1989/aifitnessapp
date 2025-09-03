@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_ENDPOINTS from '../config/api';
 
 const DEFAULT_IMAGE = 'https://cdn.pixabay.com/photo/2017/01/20/15/06/food-1995056_1280.png'; // visually appealing food illustration
 
@@ -57,7 +58,7 @@ const MyRecipes: React.FC = () => {
                   e.stopPropagation();
                   if (window.confirm('Delete this recipe?')) {
                     try {
-                      await axios.delete(`http://localhost:3001/api/recipes/${recipe.id}`);
+                      await axios.delete(`${API_ENDPOINTS.recipes/${recipe.id}.replace(/\//g, "_").toUpperCase()}`);
                       setRecipes(recipes.filter((r) => r.id !== recipe.id));
                     } catch {
                       alert('Failed to delete recipe.');

@@ -38,6 +38,7 @@ import { PieChart as MacroPieChart, Pie, Cell, ResponsiveContainer } from 'recha
 import MacroChart, { MacroChartMode } from '../components/MacroChart';
 
 // Add at the top, after imports
+import API_ENDPOINTS from '../config/api';
 const DEFAULT_IMAGE = 'https://cdn.pixabay.com/photo/2017/01/20/15/06/food-1995056_1280.png';
 
 const Fuel = () => {
@@ -156,7 +157,7 @@ const Fuel = () => {
 
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(query)}`);
+      const response = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(query)}.replace(/\//g, "_").toUpperCase()}`);
       setSearchResults(response.data);
     } catch (error) {
       console.error('Food search error:', error);
@@ -173,7 +174,7 @@ const Fuel = () => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(query)}`);
+      const response = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(query)}.replace(/\//g, "_").toUpperCase()}`);
       setIngredientResults(response.data);
     } catch (error) {
       console.error('Ingredient search error:', error);
@@ -1467,7 +1468,7 @@ function RecipeModal({ onClose, setLogRecipe, setShowLogModal, setLogMeal, setLo
     const matches: any[] = [];
     for (const line of lines) {
       try {
-        const res = await axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(line)}`);
+        const res = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(line)}.replace(/\//g, "_").toUpperCase()}`);
         if (res.data && res.data.length > 0) {
           matches.push({ ...res.data[0], original: line, quantity: 1 });
         } else {
@@ -1498,7 +1499,7 @@ function RecipeModal({ onClose, setLogRecipe, setShowLogModal, setLogMeal, setLo
   };
   const handleManualSearch = async (idx: number, query: string) => {
     try {
-      const res = await axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(query)}`);
+      const res = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(query)}.replace(/\//g, "_").toUpperCase()}`);
       if (res.data && res.data.length > 0) {
         updateMatchedIngredient(idx, { ...res.data[0], unmatched: false });
       } else {
@@ -2034,7 +2035,7 @@ function FoodSearchTabs({ selectedMeal, onClose, addFood, setShowRecipeModal, se
   useEffect(() => {
     if (tab === 'search' && searchQuery) {
       setLoadingSearch(true);
-      axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(searchQuery)}`)
+      axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(searchQuery)}.replace(/\//g, "_").toUpperCase()}`)
         .then(res => setSearchResults(res.data))
         .catch(() => setSearchResults([]))
         .finally(() => setLoadingSearch(false));
@@ -2081,7 +2082,7 @@ function FoodSearchTabs({ selectedMeal, onClose, addFood, setShowRecipeModal, se
                       e.stopPropagation();
                       if (window.confirm('Delete this recipe?')) {
                         try {
-                          await axios.delete(`http://localhost:3001/api/recipes/${recipe.id}`);
+                          await axios.delete(`${API_ENDPOINTS.recipes/${recipe.id}.replace(/\//g, "_").toUpperCase()}`);
                           setMyRecipes(myRecipes.filter(r => r.id !== recipe.id));
                         } catch {
                           alert('Failed to delete recipe.');

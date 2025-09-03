@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 import axios from 'axios';
+import API_ENDPOINTS from '../config/api';
 
 interface Exercise {
   id: number;
@@ -108,7 +109,7 @@ const Move: React.FC = () => {
       if (query) params.append('q', query);
       if (category && category !== 'All') params.append('category', category);
       
-      const response = await axios.get(`http://localhost:3001/api/exercises/search?${params}`);
+      const response = await axios.get(`${API_ENDPOINTS.exercises/search?${params}.replace(/\//g, "_").toUpperCase()}`);
       setSearchResults(response.data);
     } catch (error) {
       console.error('Exercise search error:', error);
