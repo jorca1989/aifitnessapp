@@ -14,7 +14,16 @@ const __dirname = path.dirname(__filename);
 const projectRoot = path.join(__dirname, '..');
 dotenv.config({ path: path.join(projectRoot, '.env') });
 
-const app = express();
+// Reuse the shared app when running on Vercel
+let appInstance;
+try {
+  // eslint-disable-next-line import/no-relative-packages
+  const mod = await import('./app.js');
+  appInstance = mod.app;
+} catch {
+  appInstance = express();
+}
+const app = appInstance;
 const PORT = process.env.PORT || 3001;
 
 // Middleware
@@ -1676,7 +1685,9 @@ app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-app.listen(PORT, () => {
+// Only listen locally (dev). On Vercel we export the app.
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
   console.log(`AiFit API server running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/api/health`);
   console.log(`\n🔧 ADMIN ACCESS:`);
@@ -1695,4 +1706,7 @@ app.listen(PORT, () => {
   console.log(`\n📱 Public Endpoints:`);
   console.log(`GET    /api/recipes           - Get recipes (with filters)`);
   console.log(`GET    /api/workouts          - Get workouts (with filters)`);
-});
+  });
+}
+
+export default app;
