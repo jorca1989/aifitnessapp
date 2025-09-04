@@ -157,7 +157,7 @@ const Fuel = () => {
 
     setLoading(true);
     try {
-      const response = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(query)}.replace(/\//g, "_").toUpperCase()}`);
+      const response = await axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(query)}`);
       setSearchResults(response.data);
     } catch (error) {
       console.error('Food search error:', error);
@@ -174,7 +174,7 @@ const Fuel = () => {
     }
 
     try {
-      const response = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(query)}.replace(/\//g, "_").toUpperCase()}`);
+      const response = await axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(query)}`);
       setIngredientResults(response.data);
     } catch (error) {
       console.error('Ingredient search error:', error);
@@ -1468,7 +1468,7 @@ function RecipeModal({ onClose, setLogRecipe, setShowLogModal, setLogMeal, setLo
     const matches: any[] = [];
     for (const line of lines) {
       try {
-        const res = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(line)}.replace(/\//g, "_").toUpperCase()}`);
+        const res = await axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(line)}`);
         if (res.data && res.data.length > 0) {
           matches.push({ ...res.data[0], original: line, quantity: 1 });
         } else {
@@ -1499,7 +1499,7 @@ function RecipeModal({ onClose, setLogRecipe, setShowLogModal, setLogMeal, setLo
   };
   const handleManualSearch = async (idx: number, query: string) => {
     try {
-      const res = await axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(query)}.replace(/\//g, "_").toUpperCase()}`);
+      const res = await axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(query)}`);
       if (res.data && res.data.length > 0) {
         updateMatchedIngredient(idx, { ...res.data[0], unmatched: false });
       } else {
@@ -2035,7 +2035,7 @@ function FoodSearchTabs({ selectedMeal, onClose, addFood, setShowRecipeModal, se
   useEffect(() => {
     if (tab === 'search' && searchQuery) {
       setLoadingSearch(true);
-      axios.get(`${API_ENDPOINTS.foods/search?q=${encodeURIComponent(searchQuery)}.replace(/\//g, "_").toUpperCase()}`)
+      axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(searchQuery)}`)
         .then(res => setSearchResults(res.data))
         .catch(() => setSearchResults([]))
         .finally(() => setLoadingSearch(false));
