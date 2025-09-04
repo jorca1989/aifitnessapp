@@ -2082,7 +2082,7 @@ function FoodSearchTabs({ selectedMeal, onClose, addFood, setShowRecipeModal, se
                       e.stopPropagation();
                       if (window.confirm('Delete this recipe?')) {
                         try {
-                          await axios.delete(`${API_ENDPOINTS.recipes/${recipe.id}.replace(/\//g, "_").toUpperCase()}`);
+                          await axios.delete(`${API_ENDPOINTS.RECIPES}/${recipe.id}`);
                           setMyRecipes(myRecipes.filter(r => r.id !== recipe.id));
                         } catch {
                           alert('Failed to delete recipe.');
