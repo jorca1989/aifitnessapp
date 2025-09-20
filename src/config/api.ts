@@ -1,20 +1,29 @@
 // API Configuration for different environments
 const getApiBaseUrl = () => {
-  // Check if we're in development
-  if (import.meta.env.DEV) {
-    return 'http://localhost:3001';
-  }
-  
-  // Check for custom API URL in environment variables
+  // Check for custom API URL in environment variables first
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
   
-  // Production backend URL
+  // Check if we're in development (only for localhost)
+  if (import.meta.env.DEV && window.location.hostname === 'localhost') {
+    return 'http://localhost:3001';
+  }
+  
+  // Production backend URL (default for all deployed environments)
   return 'https://aifitnessapp-production.up.railway.app';
 };
 
-export const API_BASE_URL = getApiBaseUrl();
+// Force production URL for debugging
+const FORCE_PRODUCTION = true;
+const getApiBaseUrlForced = () => {
+  if (FORCE_PRODUCTION) {
+    return 'https://aifitnessapp-production.up.railway.app';
+  }
+  return getApiBaseUrl();
+};
+
+export const API_BASE_URL = getApiBaseUrlForced();
 
 // API endpoints
 export const API_ENDPOINTS = {
@@ -36,3 +45,5 @@ export const API_ENDPOINTS = {
 } as const;
 
 export default API_BASE_URL;
+
+
