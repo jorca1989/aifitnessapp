@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_ENDPOINTS } from '../config/api';
 import { 
   Search, 
   Heart, 
@@ -60,7 +61,7 @@ const Recipes: React.FC = () => {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:3001/api/recipes', {
+        const response = await axios.get(API_ENDPOINTS.RECIPES, {
           params: {
             category: selectedCategory,
             search: searchQuery

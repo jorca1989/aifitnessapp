@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 import { PieChart as MacroPieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const UNIT_OPTIONS = ['g', 'ml', 'cup', 'tbsp', 'tsp', 'piece'];
@@ -29,7 +30,7 @@ const CreateRecipe: React.FC = () => {
     const matches: any[] = [];
     for (const line of lines) {
       try {
-        const res = await axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(line)}`);
+        const res = await axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(line)}`);
         if (res.data && res.data.length > 0) {
           matches.push({ ...res.data[0], original: line, quantity: 1 });
         } else {
@@ -62,7 +63,7 @@ const CreateRecipe: React.FC = () => {
   };
   const handleManualSearch = async (idx: number, query: string) => {
     try {
-      const res = await axios.get(`http://localhost:3001/api/foods/search?q=${encodeURIComponent(query)}`);
+      const res = await axios.get(`${API_ENDPOINTS.FOODS_SEARCH}?q=${encodeURIComponent(query)}`);
       if (res.data && res.data.length > 0) {
         updateMatchedIngredient(idx, { ...res.data[0], unmatched: false });
       } else {
@@ -101,7 +102,7 @@ const CreateRecipe: React.FC = () => {
   const handleSaveRecipe = async () => {
     setSaveLoading(true);
     try {
-      const response = await axios.post('http://localhost:3001/api/recipes', {
+      const response = await axios.post(API_ENDPOINTS.RECIPES, {
         name: recipeForm.name,
         servings: recipeForm.servings,
         ingredients: matchedIngredients.map(ing => ({

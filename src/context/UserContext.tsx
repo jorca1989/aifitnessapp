@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 
 interface UserProfile {
   name: string;
@@ -202,7 +203,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           fat: entry.fat
         }
       };
-      await axios.post('http://localhost:3001/api/user/log-food', payload);
+      await axios.post(API_ENDPOINTS.USER_LOG_FOOD, payload);
     } catch (e) {
       // Optionally handle error
       console.error('Failed to log food to backend', e);

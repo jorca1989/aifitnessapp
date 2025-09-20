@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_ENDPOINTS } from '../config/api';
 import { 
   Search, 
   Play, 
@@ -63,7 +64,7 @@ const Workouts: React.FC = () => {
     const fetchWorkouts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:3001/api/workouts', {
+        const response = await axios.get(API_ENDPOINTS.WORKOUTS, {
           params: {
             category: selectedCategory,
             search: searchQuery

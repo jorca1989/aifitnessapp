@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 
 const DEFAULT_IMAGE = 'https://cdn.pixabay.com/photo/2017/01/20/15/06/food-1995056_1280.png'; // visually appealing food illustration
 
@@ -16,7 +17,7 @@ const MyRecipes: React.FC = () => {
     const fetchRecipes = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://localhost:3001/api/recipes');
+        const res = await axios.get(API_ENDPOINTS.RECIPES);
         // Only user-created recipes have a 'name' property (not 'title')
         setRecipes(res.data.filter((r: any) => r.name && !r.title));
       } catch (e) {
@@ -57,7 +58,7 @@ const MyRecipes: React.FC = () => {
                   e.stopPropagation();
                   if (window.confirm('Delete this recipe?')) {
                     try {
-                      await axios.delete(`http://localhost:3001/api/recipes/${recipe.id}`);
+                      await axios.delete(`${API_ENDPOINTS.RECIPES}/${recipe.id}`);
                       setRecipes(recipes.filter((r) => r.id !== recipe.id));
                     } catch {
                       alert('Failed to delete recipe.');

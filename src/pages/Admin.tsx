@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_ENDPOINTS, API_BASE_URL } from '../config/api';
 import { 
   Plus, 
   Edit3, 
@@ -116,7 +117,7 @@ const Admin: React.FC = () => {
       const formData = new FormData();
       formData.append('image', file);
       
-      const response = await axios.post('http://localhost:3001/api/admin/upload/image', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/upload/image`, formData, {
         headers: {
           ...adminHeaders,
           'Content-Type': 'multipart/form-data'
@@ -138,7 +139,7 @@ const Admin: React.FC = () => {
       const formData = new FormData();
       formData.append('video', file);
       
-      const response = await axios.post('http://localhost:3001/api/admin/upload/video', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/upload/video`, formData, {
         headers: {
           ...adminHeaders,
           'Content-Type': 'multipart/form-data'
@@ -160,7 +161,7 @@ const Admin: React.FC = () => {
       const formData = new FormData();
       formData.append('thumbnail', file);
       
-      const response = await axios.post('http://localhost:3001/api/admin/upload/thumbnail', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/admin/upload/thumbnail`, formData, {
         headers: {
           ...adminHeaders,
           'Content-Type': 'multipart/form-data'
@@ -191,8 +192,8 @@ const Admin: React.FC = () => {
     setLoading(true);
     try {
       const [recipesRes, workoutsRes] = await Promise.all([
-        axios.get('http://localhost:3001/api/admin/recipes', { headers: adminHeaders }),
-        axios.get('http://localhost:3001/api/admin/workouts', { headers: adminHeaders })
+        axios.get(API_ENDPOINTS.ADMIN_RECIPES, { headers: adminHeaders }),
+        axios.get(API_ENDPOINTS.ADMIN_WORKOUTS, { headers: adminHeaders })
       ]);
       setRecipes(recipesRes.data.recipes || []);
       setWorkouts(workoutsRes.data.workouts || []);
@@ -220,9 +221,9 @@ const Admin: React.FC = () => {
       };
 
       if (editingRecipe) {
-        await axios.put(`http://localhost:3001/api/admin/recipes/${editingRecipe.id}`, recipeData, { headers: adminHeaders });
+        await axios.put(`${API_ENDPOINTS.ADMIN_RECIPES}/${editingRecipe.id}`, recipeData, { headers: adminHeaders });
       } else {
-        await axios.post('http://localhost:3001/api/admin/recipes', recipeData, { headers: adminHeaders });
+        await axios.post(API_ENDPOINTS.ADMIN_RECIPES, recipeData, { headers: adminHeaders });
       }
 
       fetchData();
@@ -238,7 +239,7 @@ const Admin: React.FC = () => {
   const handleDeleteRecipe = async (id: number) => {
     if (confirm('Are you sure you want to delete this recipe?')) {
       try {
-        await axios.delete(`http://localhost:3001/api/admin/recipes/${id}`, { headers: adminHeaders });
+        await axios.delete(`${API_ENDPOINTS.ADMIN_RECIPES}/${id}`, { headers: adminHeaders });
         fetchData();
       } catch (error) {
         console.error('Error deleting recipe:', error);
@@ -279,9 +280,9 @@ const Admin: React.FC = () => {
       };
 
       if (editingWorkout) {
-        await axios.put(`http://localhost:3001/api/admin/workouts/${editingWorkout.id}`, workoutData, { headers: adminHeaders });
+        await axios.put(`${API_ENDPOINTS.ADMIN_WORKOUTS}/${editingWorkout.id}`, workoutData, { headers: adminHeaders });
       } else {
-        await axios.post('http://localhost:3001/api/admin/workouts', workoutData, { headers: adminHeaders });
+        await axios.post(API_ENDPOINTS.ADMIN_WORKOUTS, workoutData, { headers: adminHeaders });
       }
 
       fetchData();
@@ -297,7 +298,7 @@ const Admin: React.FC = () => {
   const handleDeleteWorkout = async (id: number) => {
     if (confirm('Are you sure you want to delete this workout?')) {
       try {
-        await axios.delete(`http://localhost:3001/api/admin/workouts/${id}`, { headers: adminHeaders });
+        await axios.delete(`${API_ENDPOINTS.ADMIN_WORKOUTS}/${id}`, { headers: adminHeaders });
         fetchData();
       } catch (error) {
         console.error('Error deleting workout:', error);

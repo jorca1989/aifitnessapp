@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../config/api';
 import { 
   Plus, 
   Dumbbell, 
@@ -108,7 +109,7 @@ const Move: React.FC = () => {
       if (query) params.append('q', query);
       if (category && category !== 'All') params.append('category', category);
       
-      const response = await axios.get(`http://localhost:3001/api/exercises/search?${params}`);
+      const response = await axios.get(`${API_BASE_URL}/api/exercises/search?${params}`);
       setSearchResults(response.data);
     } catch (error) {
       console.error('Exercise search error:', error);

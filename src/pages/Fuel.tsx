@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_ENDPOINTS } from '../config/api';
 import { 
   Plus, 
   Search, 
@@ -291,7 +292,7 @@ const Fuel = () => {
       const formData = new FormData();
       formData.append('image', blob, 'food.jpg');
       
-      const response = await axios.post('http://localhost:3001/api/foods/recognize', formData, {
+      const response = await axios.post(API_ENDPOINTS.FOODS_RECOGNIZE, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
