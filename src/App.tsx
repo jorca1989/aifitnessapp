@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from './components/Navigation';
-import DebugInfo from './components/DebugInfo';
 import Onboarding from './pages/Onboarding';
 import Home from './pages/Home';
 import Fuel from './pages/Fuel';
@@ -84,7 +83,6 @@ function App() {
             </motion.div>
           </AnimatePresence>
           <Navigation />
-          <DebugInfo />
         </div>
       </Router>
     </UserProvider>
